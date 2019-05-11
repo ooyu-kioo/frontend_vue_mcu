@@ -101,7 +101,8 @@ export default {
     // API通信
     searchApi() {
       axios
-        .get("http://127.0.0.1:8000/api/v1/infomation/?format=json")
+      // http://127.0.0.1:8000/api/v1/infomation/?format=json
+        .get("https://django-vue-mcu.herokuapp.com/api/v1/infomation/?format=json")
         .then(
           response => (
             (this.results = response.data), (this.allResults = response.data)
