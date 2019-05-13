@@ -10,8 +10,8 @@ export default new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'home',
-			component: Home
+			name: 'mainList',
+			component: MainList
 		},
 		{
 			path: '/about',
@@ -20,9 +20,9 @@ export default new Router({
 				import(/* webpackChunkName: "about" */ './views/About.vue')
 		},
 		{
-			path: '/main-list',
-			name: 'mainList',
-			component: MainList
+			path: '/home',
+			name: 'home',
+			component: Home
 		},
 		{
 			path: '/test',
