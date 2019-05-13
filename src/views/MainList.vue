@@ -106,7 +106,6 @@ export default {
         .get("https://django-vue-mcu.herokuapp.com/api/v1/infomation/?format=json")
         .then(
           response => (
-            console.log(response)
             (this.results = response.data), (this.allResults = response.data)
           )
         );
