@@ -12,7 +12,7 @@
 <template>
   <div class="main-list">
     <el-button @click="searchApi">API通信</el-button>
-    <el-button @click="unfilterArtist">全アーティスト表示</el-button>
+    <el-button @click="unfilterArtist">新着</el-button>
     <!-- クリックで呼び出すfilter()に引数を渡せる -->
     <el-button @click="filterArtist('UVERworld')">UVERworkd</el-button>
     <el-button @click="filterArtist('ReoNa')">ReoNa</el-button>
