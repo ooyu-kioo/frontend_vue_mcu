@@ -71,6 +71,7 @@
   </div>
 </template>
 
+<script src="vue.js"></script>
 <script>
 // import modal from "../components/modalComp.vue";
 import axios from "axios";
