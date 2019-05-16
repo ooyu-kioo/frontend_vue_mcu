@@ -1,45 +1,53 @@
 <template>
-  <div class="test">
+  <div class="main-list">
     <el-button @click="searchApi">API通信</el-button>
-    <el-button @click="unfilterArtist">全アーティスト表示</el-button>
+    <el-button @click="unfilterArtist">新着</el-button>
     <!-- クリックで呼び出すfilter()に引数を渡せる -->
     <el-button @click="filterArtist('UVERworld')">UVERworkd</el-button>
     <el-button @click="filterArtist('ReoNa')">ReoNa</el-button>
+    <el-button @click="filterArtist('凛として時雨')">凛として時雨</el-button>
+    <el-button @click="filterArtist('Hello Sleep Walkers')">Hello Sleep Walkers</el-button>
     <el-button @click="filterArtist('cinema staff')">cinema staff</el-button>
+    <el-button @click="filterArtist('[Alexandros]')">[Alexandros]</el-button>
+    <el-button @click="filterArtist('ヨルシカ')">ヨルシカ</el-button>
 
     <!-- カード -->
-    <ul class="wrapperList">
-      <div @click="transition(result.info_body_link)">
-        <li
-          v-for="result in results"
-          v-bind:key="result.id"
-          @click="transition(result.info_body_link)"
-        >
-          <div class="l-card">
-            <div class="l-thumbnail">
-              <div class="wrapperThumbnail">
-                <!-- <img :src="imgSrc"> -->
-                <span>ここにimegeだすー</span>
-              </div>
+    <el-row class="row-list">
+      <el-col :span="8" v-for="result in results" :key="result.id">
+        <div @click="openModal(result)">
+          <el-card class="el-card" :body-style=" { padding: '0px' }" shadow="hover">
+            <!-- imgソースを動的に組み立て -->
+            <img
+              class="image"
+              :src="require('./../assets/' + result.artist_name + '.png')"
+              alt="No Image"
+            />
+            <div style="padding: 10px;">
+              <div><strong>{{ result.artist_name }}</strong></div>
+              <span>{{ result.info_title }}</span>
             </div>
-            <div class="textContent">
-              <h3 class="artist_name">{{ result.artist_name }}</h3>
-            </div>
-          </div>
-        </li>
-      </div>
-    </ul>
+          </el-card>
+        </div>
+      </el-col>
+    </el-row>
+
     <!-- カードクリック時のダイアログcomponent -->
-    <!-- <el-dialog :title="modalResult.artist_name" :visible.sync="dialogVisible" width="30%">
-      <span>This is a XXX!</span>
-    </el-dialog>-->
+    <el-dialog :visible.sync="dialogVisible" width="90%">
+      <iframe class="modal-frame" :src=frameSrc></iframe>
+    </el-dialog>
+
   </div>
 </template>
 
+<script src="vue.js"></script>
 <script>
+import axios from "axios";
+//
 export default {
-  name: "test",
-  components: {},
+  name: "mainList",
+  components: {
+    // modal
+  },
   // 表示データの宣言・初期値設定(APIでデータ受け取ってから処理するからnull)
   data() {
     return {
@@ -50,7 +58,9 @@ export default {
       modalVisible: false,
       dialogVisible: false,
       // modalに渡すresultOBJ
-      modalResult: ""
+      modalResult: "",
+      // frameに渡すURL
+      frameSrc: ""
     };
   },
   // vueインスタンス生成時に実行する処理を記載(createdと速度差あり)
@@ -61,7 +71,7 @@ export default {
     // API通信
     searchApi() {
       axios
-        .get("http://127.0.0.1:8000/api/v1/infomation/?format=json")
+        .get("https://django-vue-mcu.herokuapp.com/api/v1/infomation/?format=json")
         .then(
           response => (
             (this.results = response.data), (this.allResults = response.data)
@@ -79,22 +89,22 @@ export default {
       );
     },
     // modal処理
-    openModal(result) {
-      console.log(result);
-      // modal表示用変数に元データをコピー
-      this.modalResult = result;
-      console.log("---modalResult---");
-      console.log(this.modalResult);
-      // 表示切り替え
-      // this.modalVisible = true;
-      this.dialogVisible = true;
+    openModal(result) {    
+      console.log(result);  
+      this.modalResult = result; // modal表示用変数に元データをコピー
+      this.frameSrc = result.info_body_link; // iframeのsrcをURL指定
+      console.log(frameSrc);
+      this.dialogVisible = true; // 表示切り替え
     },
     // modal非表示
     closeModal() {
       this.modalVisible = false;
     },
+    // info詳細：外部ページへの遷移
     transition(link) {
+      // 同一ページ遷移
       // window.location.href = link;
+      // 別タブ遷移
       window.open(link, "_blank");
     }
   }
@@ -102,107 +112,39 @@ export default {
 </script>
 
 <style scoped>
-.l-card {
+
+.row-list {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.el-card {
   overflow: hidden;
   width: 320px;
   padding: 0;
+  background: #fff;
   margin: 24px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  background: #fff;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
-.l-thumbnail {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: auto;
-}
-.wrapperThumbnail {
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-.wrapperThumbnail::after {
-  transition: 0.5s;
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  opacity: 0;
-}
-.wrapperThumbnail img {
-  transition: 0.5s;
-  display: block;
-  width: auto;
-  height: 250px;
-  margin: 0 auto;
-}
-
-.moreText {
-  transition: opacity 0.5s, transform 0.8s;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -75%);
-  display: inline-block;
-  padding: 6px 12px 8px;
-  color: #fff;
-  font-size: 14px;
-  font-weight: bold;
-  border: 1px solid #fff;
-  opacity: 0;
-}
-.l-card:hover .wrapperThumbnail::after {
-  opacity: 1;
-}
-.l-card:hover .wrapperThumbnail img {
-  transform: scale(1.1);
-  filter: blur(3px) grayscale(100%);
-}
-.l-card:hover .moreText {
-  transform: translate(-50%, -50%);
-  opacity: 1;
-}
-
-.contentMeta {
-  display: flex;
-  align-content: center;
-  justify-content: space-between;
-  margin: 5px 10px;
-}
-
-.date {
-  font-size: 12px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  align-self: center;
-}
-
-.cardTag > li + li {
-  margin-left: 10px;
-}
-
-.cardTag li {
-  background: #eee;
+.modal-frame {
+  width: 90%;
+  height: 600px;
   border: none;
-  color: #666;
-  padding: 6px;
-  margin: 3px;
-  border-radius: 3px;
-  font-size: 12px;
-  height: 12px;
 }
+
 </style>
-
-
