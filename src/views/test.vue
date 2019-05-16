@@ -90,10 +90,8 @@ export default {
     },
     // modal処理
     openModal(result) {    
-      console.log(result);  
       this.modalResult = result; // modal表示用変数に元データをコピー
       this.frameSrc = result.info_body_link; // iframeのsrcをURL指定
-      console.log(frameSrc);
       this.dialogVisible = true; // 表示切り替え
     },
     // modal非表示
