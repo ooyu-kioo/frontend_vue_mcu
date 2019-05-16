@@ -23,13 +23,10 @@
     <el-button @click="filterArtist('ヨルシカ')">ヨルシカ</el-button>
 
     <!-- カード -->
-    <!-- :gutter="10" -->
-    <el-row class="row-list">
-      <!--  :offset="2" -->
-      <el-col :span="8" v-for="result in results" :key="result.id">
-        <!-- @click="openModal(result)" -->
-        <div @click="transition(result.info_body_link)">
-          <el-card class="el-card" :body-style="  { padding: '0px' }" shadow="hover">
+    <div class="container">
+      <ul class="wrapperList">
+        <li class="list" v-for="result in results" :key="result.id" @click="transition(result.info_body_link)">
+          <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
             <!-- imgソースを動的に組み立て -->
             <img
               class="image"
@@ -41,27 +38,9 @@
               <span>{{ result.info_title }}</span>
             </div>
           </el-card>
-        </div>
-      </el-col>
-    </el-row>
-
-    <!-- テスト用 -->
-    <!-- <el-row>
-      <el-col
-        :span="8"
-        v-for="(result, index) in results"
-        :key="result.id"
-        :offset="index > 0 ? 2 : 0"
-      >
-        <el-card :body-style="{ padding: '0px' }">
-          <div style="padding: 14px;">
-            <div>{{ result.artist_name }}</div>
-            <div>{{ result.info_title }}</div>
-            <div class="bottom clearfix"></div>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>-->
+        </li>
+      </ul>
+    </div>
 
     <!-- カードクリック時のダイアログcomponent -->
     <!-- <modal v-bind:modal-result="modalResult" v-if="modalVisible" @close="closeModal"></modal> -->
@@ -73,13 +52,11 @@
 
 <script src="vue.js"></script>
 <script>
-// import modal from "../components/modalComp.vue";
 import axios from "axios";
 //
 export default {
   name: "mainList",
   components: {
-    // modal
   },
   // 表示データの宣言・初期値設定(APIでデータ受け取ってから処理するからnull)
   data() {
@@ -109,7 +86,6 @@ export default {
             (this.results = response.data), (this.allResults = response.data)
           )
         );
-      // .finally(() => this.makeImgSrc());
     },
     // 全アーティスト表示
     unfilterArtist() {
@@ -123,11 +99,9 @@ export default {
     },
     // modal処理
     openModal(result) {
-      // modal表示用変数に元データをコピー
-      this.modalResult = result;
-      // 表示切り替え
+      this.modalResult = result; // modal表示用変数に元データをコピー
       // this.modalVisible = true;
-      this.dialogVisible = true;
+      this.dialogVisible = true; // 表示切り替え
     },
     // modal非表示
     closeModal() {
@@ -135,10 +109,8 @@ export default {
     },
     // info詳細：外部ページへの遷移
     transition(link) {
-      // 同一ページ遷移
-      window.location.href = link;
-      // 別タブ遷移
-      // window.open(link, "_blank");
+      window.location.href = link; // 同一ページ遷移
+      // window.open(link, "_blank"); // 別タブ遷移
     }
   }
 };
@@ -146,14 +118,28 @@ export default {
 
 <style scoped>
 
-.row-list {
+* { box-sizing: border-box; } /* 全要素に対してpadding, margin適用時の崩れ補正 */
+
+li {
+  list-style: none; /* listの黒ぽち非表示 */
+}
+
+.container {
+  text-align: center;
+}
+
+.wrapperList {
   padding: 0;
-  display: flex;
-  justify-content: center;
-  width: 80%;
+  display: flex; 
+  justify-content: space-between;
+  width: 90%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
   flex-wrap: wrap;
+}
+
+.list {
+  width: 256px;
 }
 
 .image {
@@ -164,13 +150,13 @@ export default {
 
 .el-card {
   overflow: hidden;
-  width: 320px;
+  width: 100%;
   padding: 0;
   background: #fff;
   margin: 24px;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 </style>

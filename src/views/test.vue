@@ -11,25 +11,6 @@
     <el-button @click="filterArtist('[Alexandros]')">[Alexandros]</el-button>
     <el-button @click="filterArtist('ヨルシカ')">ヨルシカ</el-button>
 
-    <!-- カード -->
-    <!-- <el-row class="row-list">
-      <el-col :span=8 v-for="result in results" :key="result.id">
-        <div @click="openModal(result)">
-          <el-card class="el-card" :body-style=" { padding: '0px' }" shadow="hover">
-            <img
-              class="image"
-              :src="require('./../assets/' + result.artist_name + '.png')"
-              alt="No Image"
-            />
-            <div style="padding: 10px;">
-              <div><strong>{{ result.artist_name }}</strong></div>
-              <span>{{ result.info_title }}</span>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-    </el-row> -->
-
     <div class="container">
       <ul class="wrapperList">
         <li class="list" v-for="result in results" :key="result.id" @click="openModal(result)">
@@ -48,12 +29,10 @@
         </li>
       </ul>
     </div>
-
     <!-- カードクリック時のダイアログcomponent -->
     <el-dialog :visible.sync="dialogVisible" width="90%">
       <iframe class="modal-frame" sandbox="allow-scripts" :src=frameSrc></iframe>
     </el-dialog>
-
   </div>
 </template>
 
@@ -118,10 +97,8 @@ export default {
     },
     // info詳細：外部ページへの遷移
     transition(link) {
-      // 同一ページ遷移
-      // window.location.href = link;
-      // 別タブ遷移
-      window.open(link, "_blank");
+      // window.location.href = link; // 同一ページ遷移
+      window.open(link, "_blank"); // 別タブ遷移
     }
   }
 };
@@ -129,9 +106,7 @@ export default {
 
 <style scoped>
 
-* {
-  box-sizing: border-box; /* 全要素に対してpadding, margin適用時の崩れ補正 */
-}
+* { box-sizing: border-box; } /* 全要素に対してpadding, margin適用時の崩れ補正 */
 
 li {
   list-style: none;
