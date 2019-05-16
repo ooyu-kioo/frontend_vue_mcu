@@ -33,7 +33,7 @@
 
     <!-- カードクリック時のダイアログcomponent -->
     <el-dialog :visible.sync="dialogVisible" width="90%">
-      <iframe class="modal-frame" sandbox="allow-scrapts" :src=frameSrc></iframe>
+      <iframe class="modal-frame" sandbox="allow-scripts" :src=frameSrc></iframe>
     </el-dialog>
 
   </div>
