@@ -177,10 +177,10 @@ li {
   border: none;
 }
 /* レスポンシブ対応 */
-@media screen and (max-width: 1000px) {
+/* @media screen and (max-width: 1000px) {
   .row-list{
     width: 30%;
   }
-}
+} */
 
 </style>
