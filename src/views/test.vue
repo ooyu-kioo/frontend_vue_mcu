@@ -12,11 +12,10 @@
     <el-button @click="filterArtist('ヨルシカ')">ヨルシカ</el-button>
 
     <!-- カード -->
-    <el-row class="row-list">
-      <el-col :span="8" v-for="result in results" :key="result.id">
+    <!-- <el-row class="row-list">
+      <el-col :span=8 v-for="result in results" :key="result.id">
         <div @click="openModal(result)">
           <el-card class="el-card" :body-style=" { padding: '0px' }" shadow="hover">
-            <!-- imgソースを動的に組み立て -->
             <img
               class="image"
               :src="require('./../assets/' + result.artist_name + '.png')"
@@ -29,7 +28,26 @@
           </el-card>
         </div>
       </el-col>
-    </el-row>
+    </el-row> -->
+
+    <div class="container">
+      <ul class="wrapperList">
+        <li class="list" v-for="result in results" :key="result.id" @click="openModal(result)">
+          <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
+            <!-- imgソースを動的に組み立て -->
+            <img
+              class="image"
+              :src="require('./../assets/' + result.artist_name + '.png')"
+              alt="No Image"
+            />
+            <div style="padding: 10px;">
+              <div><strong>{{ result.artist_name }}</strong></div>
+              <span>{{ result.info_title }}</span>
+            </div>
+          </el-card>
+        </li>
+      </ul>
+    </div>
 
     <!-- カードクリック時のダイアログcomponent -->
     <el-dialog :visible.sync="dialogVisible" width="90%">
@@ -111,14 +129,30 @@ export default {
 
 <style scoped>
 
-.row-list {
+* {
+  box-sizing: border-box; /* 全要素に対してpadding, margin適用時の崩れ補正 */
+}
+
+li {
+  list-style: none;
+}
+
+.container {
+  text-align: center;
+}
+
+.wrapperList {
   padding: 0;
-  display: flex;
-  justify-content: center;
-  width: 80%;
+  display: flex; 
+  justify-content: space-between;
+  width: 90%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
   flex-wrap: wrap;
+}
+
+.list {
+  width: 256px;
 }
 
 .image {
@@ -126,23 +160,27 @@ export default {
   height: auto;
   display: block;
 }
-
 .el-card {
   overflow: hidden;
-  width: 320px;
+  width: 100%;
   padding: 0;
   background: #fff;
   margin: 24px;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
-
 .modal-frame {
   width: 90%;
   height: 600px;
   border: none;
+}
+/* レスポンシブ対応 */
+@media screen and (max-width: 1000px) {
+  .row-list{
+    width: 30%;
+  }
 }
 
 </style>

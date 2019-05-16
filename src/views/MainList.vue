@@ -136,9 +136,9 @@ export default {
     // info詳細：外部ページへの遷移
     transition(link) {
       // 同一ページ遷移
-      // window.location.href = link;
+      window.location.href = link;
       // 別タブ遷移
-      window.open(link, "_blank");
+      // window.open(link, "_blank");
     }
   }
 };
