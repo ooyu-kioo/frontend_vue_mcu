@@ -1,6 +1,9 @@
 // TODO デザイン
 // ・メニューレイアウト整理(スマホ対応も)
-// ・ローディングアニメーション
+// ・アニメーション
+//  ・APIロード
+//  ・画面遷移
+//  ・カード表示：順番にフェードイン
 
 // TODO 機能
 // ・リリースカレンダー
@@ -24,7 +27,8 @@
 
     <!-- カード -->
     <div class="container">
-      <ul class="listArea">
+      <!-- <ul class="listArea"> -->
+        <transition-group tag="ul" name="list" class="listArea" appear>
         <li class="list" v-for="result in results" :key="result.id" @click="transition(result.info_body_link)">
           <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
             <!-- imgソースを動的に組み立て -->
@@ -39,7 +43,8 @@
             </div>
           </el-card>
         </li>
-      </ul>
+        </transition-group>
+      <!-- </ul> -->
     </div>
   </div>
 </template>
@@ -161,6 +166,17 @@ li {
     width: 100%;
     margin: 20px 20px;
   }
+}
+
+/* trasition開始時 */
+.list-enter{
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* trasition開始から終了 */
+.list-enter-active {
+  transition: all 1.5s;
 }
 
 </style>
