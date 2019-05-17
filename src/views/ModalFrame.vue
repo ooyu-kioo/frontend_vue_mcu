@@ -1,5 +1,5 @@
 <template>
-  <div class="main-list">
+  <div class="modal-frame">
     <el-button @click="searchApi">API通信</el-button>
     <el-button @click="unfilterArtist">新着</el-button>
     <!-- クリックで呼び出すfilter()に引数を渡せる -->
@@ -31,7 +31,7 @@
     </div>
     <!-- カードクリック時のダイアログcomponent -->
     <el-dialog :visible.sync="dialogVisible" width="90%" top=5vh>
-      <iframe class="modal-frame" sandbox="allow-scripts" :src=frameSrc></iframe>
+      <iframe class="modal-iframe" sandbox="allow-scripts" :src=frameSrc></iframe>
     </el-dialog>
   </div>
 </template>
@@ -41,7 +41,7 @@
 import axios from "axios";
 //
 export default {
-  name: "mainList",
+  name: "modalFrame",
   components: {
     // modal
   },
@@ -147,7 +147,7 @@ li {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
-.modal-frame {
+.modal-iframe {
   width: 90%;
   height: 600px;
   border: none;

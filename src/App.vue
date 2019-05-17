@@ -10,7 +10,7 @@
       <el-menu-item index="/home">Home
         <!-- <router-link to="main-list">MainList</router-link> -->
       </el-menu-item>
-      <el-menu-item index="/test">test
+      <el-menu-item index="/modal-frame">modal-frame
         <!-- <router-link to="test">test</router-link> -->
       </el-menu-item>
     </el-menu>
