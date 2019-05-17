@@ -30,7 +30,7 @@
       </ul>
     </div>
     <!-- カードクリック時のダイアログcomponent -->
-    <el-dialog :visible.sync="dialogVisible" width="90%" top=5vh>
+    <el-dialog custom-class="el-dialog" :visible.sync="dialogVisible" width="90%" top=5vh>
       <iframe class="modal-iframe" sandbox="allow-scripts" :src=frameSrc></iframe>
     </el-dialog>
   </div>
@@ -149,7 +149,7 @@ li {
 }
 .modal-iframe {
   width: 90%;
-  height: 600px;
+  height: 630px;
   border: none;
 }
 /* レスポンシブ：スマホ */
@@ -157,6 +157,9 @@ li {
   .list{
     width: 100%;
     margin: 20px 20px;
+  }
+  .el-dialog{
+    height: 500px;
   }
 }
 
