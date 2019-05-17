@@ -1,9 +1,10 @@
 // TODO デザイン
-// ・divタグのリンク影響範囲
-// ・カードの幅できれば固定かなー
-// ・リリースカレンダー
+// ・main-listの遷移はaタグのリンクを関数で生成、埋め込みできる？
+// ・メニューレイアウト整理(スマホ対応も)
+// ・ローディングアニメーション
 
 // TODO 機能
+// ・リリースカレンダー
 // ・artistのフィルターの表示(el-button配置)自動でできない？
 
 // TODO その他
@@ -24,7 +25,7 @@
 
     <!-- カード -->
     <div class="container">
-      <ul class="wrapperList">
+      <ul class="listArea">
         <li class="list" v-for="result in results" :key="result.id" @click="transition(result.info_body_link)">
           <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
             <!-- imgソースを動的に組み立て -->
@@ -41,12 +42,6 @@
         </li>
       </ul>
     </div>
-
-    <!-- カードクリック時のダイアログcomponent -->
-    <!-- <modal v-bind:modal-result="modalResult" v-if="modalVisible" @close="closeModal"></modal> -->
-    <!-- <el-dialog :title="modalResult.artist_name" :visible.sync="dialogVisible" width="30%">
-      <span>This is a XXX!</span>
-    </el-dialog>-->
   </div>
 </template>
 
@@ -128,18 +123,19 @@ li {
   text-align: center;
 }
 
-.wrapperList {
+.listArea {
   padding: 0;
-  display: flex; 
-  justify-content: space-between;
-  width: 90%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
   max-width: 1200px;
   margin: auto;
   flex-wrap: wrap;
 }
 
 .list {
-  width: 256px;
+  width: 256px; /* ここが%表記だとレスポンシブ時に画面幅に対しての%を維持するからカードが細長くなる */
+  margin: 20px 20px;
 }
 
 .image {
@@ -153,10 +149,19 @@ li {
   width: 100%;
   padding: 0;
   background: #fff;
-  margin: 24px;
+  margin: 0px;
   border: 1px solid #ddd;
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
+
+/* レスポンシブ：スマホ */
+@media(max-width: 600px){
+  .list{
+    width: 100%;
+    margin: 20px 20px;
+  }
+}
+
 </style>

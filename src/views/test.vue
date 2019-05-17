@@ -12,7 +12,7 @@
     <el-button @click="filterArtist('ヨルシカ')">ヨルシカ</el-button>
 
     <div class="container">
-      <ul class="wrapperList">
+      <ul class="listArea">
         <li class="list" v-for="result in results" :key="result.id" @click="openModal(result)">
           <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
             <!-- imgソースを動的に組み立て -->
@@ -30,7 +30,7 @@
       </ul>
     </div>
     <!-- カードクリック時のダイアログcomponent -->
-    <el-dialog :visible.sync="dialogVisible" width="90%">
+    <el-dialog :visible.sync="dialogVisible" width="90%" top=5vh>
       <iframe class="modal-frame" sandbox="allow-scripts" :src=frameSrc></iframe>
     </el-dialog>
   </div>
@@ -116,11 +116,11 @@ li {
   text-align: center;
 }
 
-.wrapperList {
+.listArea {
   padding: 0;
   display: flex; 
-  justify-content: space-between;
-  width: 90%;
+  justify-content: center;
+  width: 100%;
   max-width: 1200px;
   margin: auto;
   flex-wrap: wrap;
@@ -128,6 +128,7 @@ li {
 
 .list {
   width: 256px;
+  margin: 20px 20px;
 }
 
 .image {
@@ -140,7 +141,7 @@ li {
   width: 100%;
   padding: 0;
   background: #fff;
-  margin: 24px;
+  margin: 0px;
   border: 1px solid #ddd;
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -151,11 +152,12 @@ li {
   height: 600px;
   border: none;
 }
-/* レスポンシブ対応 */
-/* @media screen and (max-width: 1000px) {
-  .row-list{
-    width: 30%;
+/* レスポンシブ：スマホ */
+@media(max-width: 600px){
+  .list{
+    width: 100%;
+    margin: 20px 20px;
   }
-} */
+}
 
 </style>
