@@ -12,26 +12,28 @@
     <el-button @click="filterArtist('ヨルシカ')">ヨルシカ</el-button>
 
     <div class="container">
-      <ul class="listArea">
+      <transition-group tag="ul" name="list" class="listArea" appear>
         <li class="list" v-for="result in results" :key="result.id" @click="openModal(result)">
           <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
             <!-- imgソースを動的に組み立て -->
             <img
               class="image"
-              :src="require('./../assets/' + result.artist_name + '.png')"
+              :src="require('./../assets/image/' + result.artist_name + '.png')"
               alt="No Image"
-            />
+            >
             <div style="padding: 10px;">
-              <div><strong>{{ result.artist_name }}</strong></div>
+              <div>
+                <strong>{{ result.artist_name }}</strong>
+              </div>
               <span>{{ result.info_title }}</span>
             </div>
           </el-card>
         </li>
-      </ul>
+      </transition-group>
     </div>
     <!-- カードクリック時のダイアログcomponent -->
-    <el-dialog custom-class="el-dialog" :visible.sync="dialogVisible" width="90%" top=5vh>
-      <iframe class="modal-iframe" sandbox="allow-scripts" :src=frameSrc></iframe>
+    <el-dialog custom-class="el-dialog" :visible.sync="dialogVisible" width="90%" top="5vh">
+      <iframe class="modal-iframe" sandbox="allow-scripts" :src="frameSrc"></iframe>
     </el-dialog>
   </div>
 </template>
@@ -68,7 +70,9 @@ export default {
     // API通信
     searchApi() {
       axios
-        .get("https://django-vue-mcu.herokuapp.com/api/v1/infomation/?format=json")
+        .get(
+          "https://django-vue-mcu.herokuapp.com/api/v1/infomation/?format=json"
+        )
         .then(
           response => (
             (this.results = response.data), (this.allResults = response.data)
@@ -105,8 +109,9 @@ export default {
 </script>
 
 <style scoped>
-
-* { box-sizing: border-box; } /* 全要素に対してpadding, margin適用時の崩れ補正 */
+* {
+  box-sizing: border-box;
+} /* 全要素に対してpadding, margin適用時の崩れ補正 */
 
 li {
   list-style: none;
@@ -118,7 +123,7 @@ li {
 
 .listArea {
   padding: 0;
-  display: flex; 
+  display: flex;
   justify-content: center;
   width: 100%;
   max-width: 1200px;
@@ -153,14 +158,23 @@ li {
   border: none;
 }
 /* レスポンシブ：スマホ */
-@media(max-width: 600px){
-  .list{
+@media (max-width: 600px) {
+  .list {
     width: 100%;
     margin: 20px 20px;
   }
-  .el-dialog{
+  .el-dialog {
     height: 500px;
   }
 }
+/* trasition開始時 */
+.list-enter {
+  opacity: 0;
+  transform: translateY(30px);
+}
 
+/* trasition開始から終了 */
+.list-enter-active {
+  transition: all 1.5s;
+}
 </style>
