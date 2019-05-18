@@ -1,9 +1,9 @@
 // TODO デザイン
 // ・メニューレイアウト整理(スマホ対応も)
+// ・ロゴ作成
+
 // ・アニメーション
-//  ・APIロード
 //  ・画面遷移
-//  ・カード表示：順番にフェードイン
 // ・カード下部にcreated_at表示(短い時間表示に直して)
 
 // TODO 機能
@@ -15,8 +15,8 @@
 
 <template>
   <div class="main-list">
-    <el-button @click="searchApi">API通信</el-button>
-    <el-button @click="unfilterArtist">新着</el-button>
+    <!-- <el-button @click="searchApi">API通信</el-button> -->
+    <el-button @click="unfilterArtist">New</el-button>
     <!-- クリックで呼び出すfilter()に引数を渡せる -->
     <el-button @click="filterArtist('UVERworld')">UVERworkd</el-button>
     <el-button @click="filterArtist('ReoNa')">ReoNa</el-button>
@@ -87,14 +87,13 @@ export default {
     // API通信
     searchApi() {
       axios
-        // http://127.0.0.1:8000/api/v1/infomation/?format=json
         .get(
           "https://django-vue-mcu.herokuapp.com/api/v1/infomation/?format=json"
         )
         .then(response => {
           this.results = response.data;
           this.allResults = response.data;
-          this.isLoading = false;
+          this.isLoading = false; // loadingアニメーション表示切り替え
         });
     },
     // 全アーティスト表示
@@ -146,7 +145,7 @@ li {
 }
 
 .listArea {
-  padding: 0;
+  /* padding: 0; */
   display: flex;
   justify-content: center;
   width: 100%;
@@ -169,10 +168,8 @@ li {
 .el-card {
   overflow: hidden;
   width: 100%;
-  padding: 0;
   background: #fff;
-  margin: 0px;
-  border: 1px solid #ddd;
+  border: none; /* elementの定義にcardと背景のborder設定あるから上書き */
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
   cursor: pointer;

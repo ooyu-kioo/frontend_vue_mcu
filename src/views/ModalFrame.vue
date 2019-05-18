@@ -1,7 +1,7 @@
 <template>
   <div class="modal-frame">
-    <el-button @click="searchApi">API通信</el-button>
-    <el-button @click="unfilterArtist">新着</el-button>
+    <!-- <el-button @click="searchApi">API通信</el-button> -->
+    <el-button @click="unfilterArtist">New</el-button>
     <!-- クリックで呼び出すfilter()に引数を渡せる -->
     <el-button @click="filterArtist('UVERworld')">UVERworkd</el-button>
     <el-button @click="filterArtist('ReoNa')">ReoNa</el-button>
