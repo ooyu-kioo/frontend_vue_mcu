@@ -15,8 +15,6 @@
 
 <template>
   <div class="main-list">
-    <!-- api読み込み時のloading -->
-    <div class="loading" v-show="isLoading"></div>
     <el-button @click="searchApi">API通信</el-button>
     <el-button @click="unfilterArtist">新着</el-button>
     <!-- クリックで呼び出すfilter()に引数を渡せる -->
@@ -29,6 +27,8 @@
     <el-button @click="filterArtist('ヨルシカ')">ヨルシカ</el-button>
 
     <!-- カード(loadingがfalseで表示) -->
+    <!-- api読み込み時のloading -->
+    <div class="loading" v-show="isLoading"></div>
     <div class="container" v-show="!isLoading">
       <transition-group tag="ul" name="list" class="listArea" appear>
         <li
