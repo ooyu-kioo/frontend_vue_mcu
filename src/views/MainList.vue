@@ -1,6 +1,7 @@
 // TODO デザイン
-// ・メニューレイアウト整理(スマホ対応も)
 // ・ロゴ作成
+// ・filer表示位置
+// ・filerボタン２押しで閉じれない
 
 // ・アニメーション
 //  ・画面遷移
@@ -11,20 +12,11 @@
 // ・artistのフィルターの表示(el-button配置)自動でできない？
 
 // TODO その他
-// ・カード表示のcss設定理解
+
 
 <template>
   <div class="main-list">
     <!-- <el-button @click="searchApi">API通信</el-button> -->
-    <!-- <el-button @click="unfilterArtist">New</el-button> -->
-    <!-- クリックで呼び出すfilter()に引数を渡せる -->
-    <!-- <el-button @click="filterArtist('UVERworld')">UVERworkd</el-button> -->
-    <!-- <el-button @click="filterArtist('ReoNa')">ReoNa</el-button> -->
-    <!-- <el-button @click="filterArtist('凛として時雨')">凛として時雨</el-button> -->
-    <!-- <el-button @click="filterArtist('Hello Sleep Walkers')">Hello Sleep Walkers</el-button> -->
-    <!-- <el-button @click="filterArtist('cinema staff')">cinema staff</el-button> -->
-    <!-- <el-button @click="filterArtist('[Alexandros]')">[Alexandros]</el-button> -->
-    <!-- <el-button @click="filterArtist('ヨルシカ')">ヨルシカ</el-button> -->
 
     <el-menu
       class="menu-bar"
@@ -37,6 +29,7 @@
     >
       <el-submenu popper-class="el-submenu">
         <template slot="title">filter Artist</template>
+        <!-- クリックで呼び出すfilter()に引数を渡せる -->
         <el-menu-item @click="unfilterArtist">New</el-menu-item>
         <el-menu-item @click="filterArtist('[Alexandros]')">[Alexandros]</el-menu-item>
         <el-menu-item @click="filterArtist('cinema staff')">cinema staff</el-menu-item>
@@ -151,6 +144,7 @@ export default {
 };
 </script>
 
+
 <style scoped>
 @import "./../assets/css/loading.css";
 
@@ -231,5 +225,14 @@ li {
 
 .el-submenu {
   width: 100%;
+}
+</style>
+
+
+<style>
+/* globalのcssに上書きしたいからscopedと別に定義する */
+.el-menu--popup {
+  width: 400%;
+  text-align: center;
 }
 </style>
