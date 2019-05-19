@@ -20,11 +20,6 @@ export default new Router({
 				import(/* webpackChunkName: "about" */ './views/About.vue')
 		},
 		{
-			path: '/home',
-			name: 'home',
-			component: Home
-		},
-		{
 			path: '/modal-frame',
 			name: 'modalFrame',
 			component: ModalFrame

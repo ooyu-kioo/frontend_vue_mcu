@@ -10,9 +10,9 @@
       active-text-color="#ffd04b"
       router="true"
     >
+      <!-- router="true"の場合、indexがrouterのpathになる -->
       <el-menu-item index="/">main-List</el-menu-item>
       <el-menu-item index="/about">about</el-menu-item>
-      <el-menu-item index="/home">Home</el-menu-item>
       <el-menu-item index="/modal-frame">modal-frame</el-menu-item>
     </el-menu>
 
@@ -21,16 +21,10 @@
   </div>
 </template>
 
-
-
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
 export default {
   name: "app",
-  components: {
-    HelloWorld
-  },
+  components: {},
   data() {
     return {
       activeIndex: "1"
@@ -62,8 +56,10 @@ export default {
 .menu-bar {
   display: flex;
   justify-content: center;
+  text-align: center;
 }
+/* サイト全体の背景画像設定 */
 html {
-  background-image: url("./assets/background-image/mosaic.png");
+  background-image: url("./assets/background-image/grey_wash_wall.png");
 }
 </style>

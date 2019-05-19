@@ -16,15 +16,39 @@
 <template>
   <div class="main-list">
     <!-- <el-button @click="searchApi">API通信</el-button> -->
-    <el-button @click="unfilterArtist">New</el-button>
+    <!-- <el-button @click="unfilterArtist">New</el-button> -->
     <!-- クリックで呼び出すfilter()に引数を渡せる -->
     <el-button @click="filterArtist('UVERworld')">UVERworkd</el-button>
     <el-button @click="filterArtist('ReoNa')">ReoNa</el-button>
     <el-button @click="filterArtist('凛として時雨')">凛として時雨</el-button>
-    <el-button @click="filterArtist('Hello Sleep Walkers')">Hello Sleep Walkers</el-button>
-    <el-button @click="filterArtist('cinema staff')">cinema staff</el-button>
-    <el-button @click="filterArtist('[Alexandros]')">[Alexandros]</el-button>
+    <!-- <el-button @click="filterArtist('Hello Sleep Walkers')">Hello Sleep Walkers</el-button> -->
+    <!-- <el-button @click="filterArtist('cinema staff')">cinema staff</el-button> -->
+    <!-- <el-button @click="filterArtist('[Alexandros]')">[Alexandros]</el-button> -->
     <el-button @click="filterArtist('ヨルシカ')">ヨルシカ</el-button>
+
+    <!-- test -->
+    <el-menu
+      class="menu-bar"
+      :default-active="activeIndex"
+      mode="horizontal"
+      @select="handleSelect"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      router="true"
+    >
+      <el-submenu>
+        <template slot="title">filter Artist</template>
+        <el-menu-item @click="unfilterArtist">New</el-menu-item>
+        <el-menu-item @click="filterArtist('[Alexandros]')">[Alexandros]</el-menu-item>
+        <el-menu-item @click="filterArtist('cinema staff')">cinema staff</el-menu-item>
+        <el-menu-item @click="filterArtist('Hello Sleep Walkers')">Hello Sleep Walkers</el-menu-item>
+      </el-submenu>
+    </el-menu>
+
+    <!-- test -->
+
+    <!-- test -->
 
     <!-- カード(loadingがfalseで表示) -->
     <!-- api読み込み時のloading -->
@@ -192,5 +216,18 @@ li {
 /* trasition開始から終了 */
 .list-enter-active {
   transition: all 1.5s;
+}
+
+/* test */
+.menu-bar {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.filter-artist {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
 }
 </style>
