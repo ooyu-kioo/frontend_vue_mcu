@@ -18,7 +18,7 @@
             <!-- imgソースを動的に組み立て -->
             <img
               class="image"
-              :src="require('./../assets/image/' + result.artist_name + '.png')"
+              :src="require('./../assets/image/artist-image/' + result.artist_name + '.png')"
               alt="No Image"
             >
             <div style="padding: 10px;">

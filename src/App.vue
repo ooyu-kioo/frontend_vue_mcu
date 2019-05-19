@@ -60,6 +60,6 @@ export default {
 }
 /* サイト全体の背景画像設定 */
 html {
-  background-image: url("./assets/background-image/grey_wash_wall.png");
+  background-image: url("./assets/image/background-image/grey_wash_wall.png");
 }
 </style>

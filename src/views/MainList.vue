@@ -1,6 +1,6 @@
 // TODO デザイン
 // ・ロゴ作成
-// ・filer表示位置
+// ・filerの子要素表示位置
 // ・filerボタン２押しで閉じれない
 
 // ・アニメーション
@@ -18,6 +18,7 @@
   <div class="main-list">
     <!-- <el-button @click="searchApi">API通信</el-button> -->
 
+    <!-- Artistのフィルターメニュー -->
     <el-menu
       class="menu-bar"
       mode="horizontal"
@@ -30,7 +31,7 @@
       <el-submenu popper-class="el-submenu">
         <template slot="title">filter Artist</template>
         <!-- クリックで呼び出すfilter()に引数を渡せる -->
-        <el-menu-item @click="unfilterArtist">New</el-menu-item>
+        <el-menu-item class="test" @click="unfilterArtist">New</el-menu-item>
         <el-menu-item @click="filterArtist('[Alexandros]')">[Alexandros]</el-menu-item>
         <el-menu-item @click="filterArtist('cinema staff')">cinema staff</el-menu-item>
         <el-menu-item @click="filterArtist('Hello Sleep Walkers')">Hello Sleep Walkers</el-menu-item>
@@ -41,7 +42,7 @@
       </el-submenu>
     </el-menu>
 
-    <!-- カード(loadingがfalseで表示) -->
+    <!-- infomationカード(loadingがfalseで表示) -->
     <!-- api読み込み時のloading -->
     <div class="loading" v-show="isLoading"></div>
     <div class="container" v-show="!isLoading">
@@ -56,7 +57,7 @@
             <!-- imgソースを動的に組み立て -->
             <img
               class="image"
-              :src="require('./../assets/image/' + result.artist_name + '.png')"
+              :src="require('./../assets/image/artist-image/' + result.artist_name + '.png')"
               alt="No Image"
             >
             <div style="padding: 10px;">
@@ -139,6 +140,9 @@ export default {
     // load表示切り替え
     loaded() {
       this.isLoading = false;
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
     }
   }
 };
@@ -232,7 +236,6 @@ li {
 <style>
 /* globalのcssに上書きしたいからscopedと別に定義する */
 .el-menu--popup {
-  width: 400%;
   text-align: center;
 }
 </style>
