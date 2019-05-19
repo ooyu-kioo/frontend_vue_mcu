@@ -57,6 +57,7 @@ export default {
   display: flex;
   justify-content: center;
   text-align: center;
+  opacity: 0.7;
 }
 /* サイト全体の背景画像設定 */
 html {

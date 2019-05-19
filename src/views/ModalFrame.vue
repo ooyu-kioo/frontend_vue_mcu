@@ -1,17 +1,35 @@
 <template>
   <div class="modal-frame">
     <!-- <el-button @click="searchApi">API通信</el-button> -->
-    <el-button @click="unfilterArtist">New</el-button>
-    <!-- クリックで呼び出すfilter()に引数を渡せる -->
-    <el-button @click="filterArtist('UVERworld')">UVERworkd</el-button>
-    <el-button @click="filterArtist('ReoNa')">ReoNa</el-button>
-    <el-button @click="filterArtist('凛として時雨')">凛として時雨</el-button>
-    <el-button @click="filterArtist('Hello Sleep Walkers')">Hello Sleep Walkers</el-button>
-    <el-button @click="filterArtist('cinema staff')">cinema staff</el-button>
-    <el-button @click="filterArtist('[Alexandros]')">[Alexandros]</el-button>
-    <el-button @click="filterArtist('ヨルシカ')">ヨルシカ</el-button>
+    <!-- Artistのフィルターメニュー -->
+    <el-menu
+      class="menu-bar"
+      mode="horizontal"
+      @select="handleSelect"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      router="true"
+    >
+      <el-submenu popper-class="el-submenu">
+        <template slot="title">filter Artist</template>
 
-    <div class="container">
+        <!-- クリックで呼び出すfilter()に引数を渡せる -->
+        <el-menu-item class="test" @click="unfilterArtist">New</el-menu-item>
+        <el-menu-item @click="filterArtist('[Alexandros]')">[Alexandros]</el-menu-item>
+        <el-menu-item @click="filterArtist('cinema staff')">cinema staff</el-menu-item>
+        <el-menu-item @click="filterArtist('Hello Sleep Walkers')">Hello Sleep Walkers</el-menu-item>
+        <el-menu-item @click="filterArtist('ReoNa')">ReoNa</el-menu-item>
+        <el-menu-item @click="filterArtist('UVERworld')">UVERworld</el-menu-item>
+        <el-menu-item @click="filterArtist('凛として時雨')">凛として時雨</el-menu-item>
+        <el-menu-item @click="filterArtist('ヨルシカ')">ヨルシカ</el-menu-item>
+      </el-submenu>
+    </el-menu>
+
+    <!-- infomationカード(loadingがfalseで表示) -->
+    <!-- api読み込み時のloading -->
+    <div class="loading" v-show="isLoading"></div>
+    <div class="container" v-show="!isLoading">
       <transition-group tag="ul" name="list" class="listArea" appear>
         <li class="list" v-for="result in results" :key="result.id" @click="openModal(result)">
           <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
@@ -59,7 +77,9 @@ export default {
       // modalに渡すresultOBJ
       modalResult: "",
       // frameに渡すURL
-      frameSrc: ""
+      frameSrc: "",
+      // loading表示用
+      isLoading: true
     };
   },
   // vueインスタンス生成時に実行する処理を記載(createdと速度差あり)
@@ -73,11 +93,11 @@ export default {
         .get(
           "https://django-vue-mcu.herokuapp.com/api/v1/infomation/?format=json"
         )
-        .then(
-          response => (
-            (this.results = response.data), (this.allResults = response.data)
-          )
-        );
+        .then(response => {
+          this.results = response.data;
+          this.allResults = response.data;
+          this.isLoading = false; // loadingアニメーション表示切り替え
+        });
     },
     // 全アーティスト表示
     unfilterArtist() {
@@ -100,9 +120,16 @@ export default {
       this.modalVisible = false;
     },
     // info詳細：外部ページへの遷移
-    transition(link) {
-      // window.location.href = link; // 同一ページ遷移
-      window.open(link, "_blank"); // 別タブ遷移
+    // transition(link) {
+    //   // window.location.href = link; // 同一ページ遷移
+    //   window.open(link, "_blank"); // 別タブ遷移
+    // },
+    // load表示切り替え
+    loaded() {
+      this.isLoading = false;
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
     }
   }
 };
@@ -144,10 +171,8 @@ li {
 .el-card {
   overflow: hidden;
   width: 100%;
-  padding: 0;
   background: #fff;
-  margin: 0px;
-  border: 1px solid #ddd;
+  border: none; /* elementの定義にcardと背景のborder設定あるから上書き */
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -172,9 +197,20 @@ li {
   opacity: 0;
   transform: translateY(30px);
 }
-
 /* trasition開始から終了 */
 .list-enter-active {
   transition: all 1.5s;
+}
+
+.el-submenu {
+  width: 100%;
+}
+</style>
+
+
+<style>
+/* globalのcssに上書きしたいからscopedと別に定義する */
+.el-menu--popup {
+  text-align: center;
 }
 </style>

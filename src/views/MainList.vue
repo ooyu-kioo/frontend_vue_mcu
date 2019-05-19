@@ -208,23 +208,9 @@ li {
   opacity: 0;
   transform: translateY(30px);
 }
-
 /* trasition開始から終了 */
 .list-enter-active {
   transition: all 1.5s;
-}
-
-/* test */
-.menu-bar {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-
-.filter-artist {
-  display: flex;
-  justify-content: center;
-  margin: 10px;
 }
 
 .el-submenu {
