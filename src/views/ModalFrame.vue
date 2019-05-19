@@ -179,7 +179,7 @@ li {
 }
 .modal-iframe {
   width: 90%;
-  height: 680px;
+  height: 630px;
   border: none;
 }
 /* レスポンシブ：スマホ */
