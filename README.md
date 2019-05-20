@@ -1,6 +1,9 @@
 # frontend
 
-#### mcuのfrontend！
+#### artist情報のスクレイピングアプリ
+- https://mcu.netlify.com/
+
+
 
 ## Project setup
 ```
