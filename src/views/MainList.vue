@@ -31,7 +31,7 @@
       <el-submenu popper-class="el-submenu">
         <template slot="title">filter Artist</template>
         <!-- クリックで呼び出すfilter()に引数を渡せる -->
-        <el-menu-item class="test" @click="unfilterArtist">New</el-menu-item>
+        <el-menu-item @click="unfilterArtist">New</el-menu-item>
         <el-menu-item @click="filterArtist('[Alexandros]')">[Alexandros]</el-menu-item>
         <el-menu-item @click="filterArtist('cinema staff')">cinema staff</el-menu-item>
         <el-menu-item @click="filterArtist('Hello Sleep Walkers')">Hello Sleep Walkers</el-menu-item>
