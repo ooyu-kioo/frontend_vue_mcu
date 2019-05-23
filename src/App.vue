@@ -27,7 +27,7 @@ export default {
   components: {},
   data() {
     return {
-      activeIndex: "1"
+      activeIndex: "/"
     };
   },
   methods: {

@@ -31,7 +31,7 @@
       <el-submenu popper-class="el-submenu">
         <template slot="title">filter Artist</template>
         <!-- クリックで呼び出すfilter()に引数を渡せる -->
-        <el-menu-item @click="unfilterArtist">New</el-menu-item>
+        <el-menu-item @click="unfilterArtist" id="unfiltered">Unfiltered</el-menu-item>
         <el-menu-item @click="filterArtist('[Alexandros]')">[Alexandros]</el-menu-item>
         <el-menu-item @click="filterArtist('cinema staff')">cinema staff</el-menu-item>
         <el-menu-item @click="filterArtist('Hello Sleep Walkers')">Hello Sleep Walkers</el-menu-item>
@@ -216,12 +216,18 @@ li {
 .el-submenu {
   width: 100%;
 }
+
+#unfiltered {
+  background-color: azure;
+}
 </style>
 
 
 <style>
 /* globalのcssに上書きしたいからscopedと別に定義する */
-.el-menu--popup {
-  text-align: center;
+
+/* サブメニューのアイテム表示域を拡大(artistフィルター) */
+.el-menu--horizontal {
+  width: 100%;
 }
 </style>
