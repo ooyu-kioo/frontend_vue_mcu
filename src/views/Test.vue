@@ -10,7 +10,7 @@
       active-text-color="#ffd04b"
       router="true"
     >
-      <el-submenu popper-class="el-submenu">
+      <el-submenu popper-class="el-submenu" v-if="!isNews">
         <template slot="title">filter Artist</template>
         <!-- クリックで呼び出すfilter()に引数を渡せる -->
         <el-menu-item @click="unfilterArtist" id="unfiltered">Unfiltered</el-menu-item>
@@ -22,8 +22,8 @@
         <el-menu-item @click="filterArtist('凛として時雨')">凛として時雨</el-menu-item>
         <el-menu-item @click="filterArtist('ヨルシカ')">ヨルシカ</el-menu-item>
       </el-submenu>
+      <el-menu-item @click="showRelease" v-if="isNews">NEWS</el-menu-item>
       <el-menu-item @click="showRelease">release Info</el-menu-item>
-      <el-button @click="searchApi">api</el-button>
     </el-menu>
 
     <!-- api読み込み時のloading -->
@@ -104,7 +104,9 @@ export default {
       // 表示切り替え
       isLoading: true, // loading
       isInfomation: false, // infomation
-      isRelease: false // release info
+      isRelease: false, // release info
+      // menuBarのボタン表示切り替え
+      isNews: false
     };
   },
   // vueインスタンス生成時に実行する処理を記載(createdと速度差あり)
@@ -152,6 +154,7 @@ export default {
     showRelease() {
       this.isInfomation = !this.isInfomation;
       this.isRelease = !this.isRelease;
+      this.isNews = !this.isNews;
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
