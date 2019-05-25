@@ -1,21 +1,5 @@
-// TODO デザイン
-// ・ロゴ作成
-// ・filerボタン２押しで閉じれない(openとcloseの管理メソッドとかないからじゃね)
-
-// ・アニメーション
-// ・カード下部にcreated_at表示(短い時間表示に直して)
-
-// TODO 機能
-// ・リリースカレンダー
-// ・artistのフィルターの表示(el-button配置)自動でできない？
-
-// TODO その他
-
-
 <template>
   <div class="main-list">
-    <!-- <el-button @click="searchApi">API通信</el-button> -->
-
     <!-- Artistのフィルターメニュー -->
     <el-menu
       class="menu-bar"
@@ -38,36 +22,67 @@
         <el-menu-item @click="filterArtist('凛として時雨')">凛として時雨</el-menu-item>
         <el-menu-item @click="filterArtist('ヨルシカ')">ヨルシカ</el-menu-item>
       </el-submenu>
+      <el-menu-item @click="showRelease">release Info</el-menu-item>
+      <el-button @click="searchApi">api</el-button>
     </el-menu>
 
-    <!-- infomationカード(loadingがfalseで表示) -->
     <!-- api読み込み時のloading -->
-    <div class="loading" v-show="isLoading"></div>
-    <div class="container" v-show="!isLoading">
-      <transition-group tag="ul" name="list" class="listArea" appear>
-        <li
-          class="list"
-          v-for="result in results"
-          :key="result.id"
-          @click="transition(result.info_body_link)"
-        >
-          <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
-            <!-- imgソースを動的に組み立て -->
-            <img
-              class="image"
-              :src="require('./../assets/image/artist-image/' + result.artist_name + '.png')"
-              alt="No Image"
-            >
-            <div style="padding: 10px;">
-              <div>
-                <strong>{{ result.artist_name }}</strong>
+    <div class="loading" v-if="isLoading"></div>
+    <!-- infomationカード(loadingがfalseで表示) -->
+    <template v-if="!isLoading && isInfomation">
+      <div class="container">
+        <transition-group tag="ul" name="list" class="listArea" appear>
+          <li
+            class="list"
+            v-for="result in results"
+            :key="result.id"
+            @click="transition(result.info_body_link)"
+          >
+            <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
+              <!-- imgソースを動的に組み立て -->
+              <img
+                class="image"
+                :src="require('./../assets/image/artist-image/' + result.artist_name + '.png')"
+                alt="No Image"
+              >
+              <div style="padding: 10px;">
+                <div>
+                  <strong>{{ result.artist_name }}</strong>
+                </div>
+                <span>{{ result.info_title }}</span>
               </div>
-              <span>{{ result.info_title }}</span>
-            </div>
-          </el-card>
-        </li>
-      </transition-group>
-    </div>
+            </el-card>
+          </li>
+        </transition-group>
+      </div>
+    </template>
+
+    <!-- release infoカード() -->
+    <!-- <div class="loading" v-if="isLoading && isRelease"></div> -->
+    <template v-if="!isLoading && isRelease">
+      <div class="container">
+        <transition-group tag="ul" name="listRelease" class="listArea-release">
+          <li
+            class="list"
+            v-for="release in releases"
+            :key="release.id"
+            @click="transition(release.buy_url)"
+          >
+            <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
+              <div style="padding: 10px;">
+                <div>
+                  <strong>{{ release.artist_name }}</strong>
+                </div>
+                <span>{{ release.release_title }}</span>
+                <span>{{ release.release_date }}</span>
+              </div>
+            </el-card>
+          </li>
+        </transition-group>
+      </div>
+    </template>
+    <!--  -->
+    <!--  -->
   </div>
 </template>
 
@@ -81,11 +96,15 @@ export default {
   // 表示データの宣言・初期値設定(APIでデータ受け取ってから処理するからnull)
   data() {
     return {
-      // json格納用(allResults=filter用のマスタデータ)
+      // Infomation格納用(allResults=filter用のマスタデータ)
       results: null,
       allResults: null,
-      // loading表示用
-      isLoading: true
+      // releaseInfo格納用
+      releases: null,
+      // 表示切り替え
+      isLoading: true, // loading
+      isInfomation: false, // infomation
+      isRelease: false // release info
     };
   },
   // vueインスタンス生成時に実行する処理を記載(createdと速度差あり)
@@ -102,7 +121,16 @@ export default {
         .then(response => {
           this.results = response.data;
           this.allResults = response.data;
-          this.isLoading = false; // loadingアニメーション表示切り替え
+          this.isLoading = !this.isLoading; // loadingアニメーション表示切り替え
+          this.isInfomation = !this.isInfomation; // infomation表示
+        });
+
+      axios
+        .get(
+          "https://django-vue-mcu.herokuapp.com/api/v1/releaseInfo/?format=json"
+        )
+        .then(response => {
+          this.releases = response.data;
         });
     },
     // 全アーティスト表示
@@ -120,10 +148,11 @@ export default {
       window.location.href = link; // 同一ページ遷移
       // window.open(link, "_blank"); // 別タブ遷移
     },
-    // load表示切り替え
-    // loaded() {
-    //   this.isLoading = false;
-    // },
+    // relase info表示切り替え
+    showRelease() {
+      this.isInfomation = !this.isInfomation;
+      this.isRelease = !this.isRelease;
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     }
@@ -149,6 +178,15 @@ li {
 
 .listArea {
   /* padding: 0; */
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.listArea-release {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -196,8 +234,17 @@ li {
   transition: all 1.5s;
 }
 
+/* release => info遷移時 */
+.listRelease-leave {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+.listRelease-leave-active {
+  transition: all 1s;
+}
+
 .el-submenu {
-  width: 100%;
+  /* width: 100%; */
 }
 
 /* unfilterの色変える？ */

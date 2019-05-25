@@ -12,8 +12,8 @@
     >
       <!-- router="true"の場合、indexがrouterのpathになる -->
       <el-menu-item index="/">main-List</el-menu-item>
-      <el-menu-item index="/about">about</el-menu-item>
       <el-menu-item index="/modal-frame">modal-frame</el-menu-item>
+      <el-menu-item index="/test">test</el-menu-item>
     </el-menu>
 
     <!-- views表示 -->
