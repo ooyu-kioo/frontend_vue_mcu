@@ -7,6 +7,9 @@
 
 // TODO 機能
 // ・リリースカレンダー
+//   ・取得リンクがamazonじゃない、ずれてる
+//   ・testのボタンの色バグ
+
 // ・artistのフィルターの表示(el-button配置)自動でできない？
 
 // TODO その他
@@ -213,5 +216,8 @@ li {
 /* サブメニューのアイテム表示域を拡大(artistフィルター) */
 .el-menu--horizontal {
   width: 100%;
+}
+.el-menu--horizontal > el-meu-item {
+  height: 50px;
 }
 </style>
