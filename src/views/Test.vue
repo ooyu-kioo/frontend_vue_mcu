@@ -22,7 +22,7 @@
         <el-menu-item @click="filterArtist('凛として時雨')">凛として時雨</el-menu-item>
         <el-menu-item @click="filterArtist('ヨルシカ')">ヨルシカ</el-menu-item>
       </el-submenu>
-      <el-menu-item @click="showRelease" v-if="isNews">NEWS</el-menu-item>
+      <el-menu-item @click="showRelease" v-if="isNews">artist Info</el-menu-item>
       <el-menu-item @click="showRelease">release Info</el-menu-item>
     </el-menu>
 
@@ -49,7 +49,8 @@
                 <div>
                   <strong>{{ result.artist_name }}</strong>
                 </div>
-                <span>{{ result.info_title }}</span>
+                <div>{{ result.info_title }}</div>
+                <div class="created_at">{{ result.created_at }}</div>
               </div>
             </el-card>
           </li>
@@ -69,13 +70,16 @@
             @click="transition(release.buy_url)"
           >
             <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
-              <div style="padding: 10px;">
-                <div>
-                  <strong>{{ release.artist_name }}</strong>
-                </div>
-                <span>{{ release.release_title }}</span>
-                <span>{{ release.release_date }}</span>
+              <img
+                class="image"
+                :src="require('./../assets/image/artist-image/' + release.artist_name + '.png')"
+                alt="No Image"
+              >
+              <div>
+                <strong>{{ release.artist_name }}</strong>
               </div>
+              <div>{{ release.release_title }}</div>
+              <div>{{ release.release_date }}</div>
             </el-card>
           </li>
         </transition-group>
@@ -217,6 +221,11 @@ li {
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+}
+
+.created_at {
+  float: right;
+  margin: 5px;
 }
 
 /* レスポンシブ：スマホ */

@@ -65,7 +65,8 @@
               <div>
                 <strong>{{ result.artist_name }}</strong>
               </div>
-              <span>{{ result.info_title }}</span>
+              <div>{{ result.info_title }}</div>
+              <div class="created_at">{{ result.created_at }}</div>
             </div>
           </el-card>
         </li>
@@ -179,6 +180,11 @@ li {
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+}
+
+.created_at {
+  float: right;
+  margin: 5px;
 }
 
 /* レスポンシブ：スマホ */
