@@ -59,7 +59,6 @@
     </template>
 
     <!-- release infoカード() -->
-    <!-- <div class="loading" v-if="isLoading && isRelease"></div> -->
     <template v-if="!isLoading && isRelease">
       <div class="container">
         <transition-group tag="ul" name="listRelease" class="listArea-release">

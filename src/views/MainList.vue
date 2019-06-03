@@ -1,24 +1,5 @@
-// TODO デザイン
-// ・ロゴ作成
-// ・filerボタン２押しで閉じれない(openとcloseの管理メソッドとかないからじゃね)
-
-// ・アニメーション
-// ・カード下部にcreated_at表示(短い時間表示に直して)
-
-// TODO 機能
-// ・リリースカレンダー
-//   ・取得リンクがamazonじゃない、ずれてる
-//   ・testのボタンの色バグ
-
-// ・artistのフィルターの表示(el-button配置)自動でできない？
-
-// TODO その他
-
-
 <template>
   <div class="main-list">
-    <!-- <el-button @click="searchApi">API通信</el-button> -->
-
     <!-- Artistのフィルターメニュー -->
     <el-menu
       class="menu-bar"
