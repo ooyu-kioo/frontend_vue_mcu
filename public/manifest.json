@@ -13,8 +13,8 @@
 			"type": "image/png"
 		}
 	],
-	"start_url": "https://mcu.netlify.com",
+	"start_url": "/index.html",
 	"display": "standalone",
-	"background_color": "#585E63",
-	"theme_color": "#585E63"
+	"background_color": "#FFD8D9",
+	"theme_color": "#FFD8D9"
 }
