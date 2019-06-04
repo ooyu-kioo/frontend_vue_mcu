@@ -61,7 +61,7 @@
     <!-- release infoカード() -->
     <template v-if="!isLoading && isRelease">
       <div class="container">
-        <transition-group tag="ul" name="listRelease" class="listArea-release">
+        <transition-group tag="ul" name="list" class="listArea-release">
           <li
             class="list"
             v-for="release in releases"
