@@ -102,8 +102,8 @@ export default {
     },
     // info詳細：外部ページへの遷移
     transition(link) {
-      window.location.href = link; // 同一ページ遷移
-      // window.open(link, "_blank"); // 別タブ遷移
+      // window.location.href = link; // 同一ページ遷移
+      window.open(link, "_blank"); // 別タブ遷移
     },
     // load表示切り替え
     // loaded() {
