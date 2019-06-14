@@ -26,8 +26,8 @@
 
     <!-- infomationカード(loadingがfalseで表示) -->
     <!-- api読み込み時のloading -->
-    <div class="loading" v-show="isLoading"></div>
-    <div class="container" v-show="!isLoading">
+    <div class="loading" v-if="isLoading"></div>
+    <div class="container" v-if="!isLoading">
       <transition-group tag="ul" name="list" class="listArea" appear>
         <li
           class="list"
