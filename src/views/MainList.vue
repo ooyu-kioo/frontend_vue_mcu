@@ -183,7 +183,7 @@ li {
 }
 /* trasition開始から終了 */
 .list-enter-active {
-  transition: all 1s;
+  transition: all 1.5s;
 }
 
 .el-submenu {
