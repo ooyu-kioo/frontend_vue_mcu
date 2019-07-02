@@ -44,13 +44,13 @@
                 class="image"
                 :src="require('./../assets/image/artist-image/' + result.artist_name + '.png')"
                 alt="No Image"
-              >
+              />
               <div style="padding: 10px;">
                 <div>
                   <strong>{{ result.artist_name }}</strong>
                 </div>
                 <div>
-                  <el-tag type="info" effect="plain" size="medium">media</el-tag>
+                  <el-tag type="info" effect="plain" size="medium">{{ result.info_label }}</el-tag>
                 </div>
                 <div>{{ result.info_title }}</div>
                 <div class="created_at">{{ result.created_at }}</div>
@@ -76,7 +76,7 @@
                 class="image"
                 :src="require('./../assets/image/artist-image/' + release.artist_name + '.png')"
                 alt="No Image"
-              >
+              />
               <div>
                 <strong>{{ release.artist_name }}</strong>
               </div>
