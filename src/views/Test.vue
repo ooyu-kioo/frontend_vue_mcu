@@ -49,11 +49,15 @@
                 <div>
                   <strong>{{ result.artist_name }}</strong>
                 </div>
-                <div>
-                  <el-tag type="info" effect="plain" size="medium">{{ result.info_label }}</el-tag>
-                </div>
+                <div></div>
                 <div>{{ result.info_title }}</div>
-                <div class="created_at">{{ result.created_at }}</div>
+                <div class="created_at">
+                  <!-- <el-tag type="info" effect="plain" size="medium">{{ result.info_label }}</el-tag> -->
+                  <strong>
+                    <span class="info_label">{{ result.info_label }}</span>
+                  </strong>
+                  <span>{{ result.created_at }}</span>
+                </div>
               </div>
             </el-card>
           </li>
@@ -228,6 +232,10 @@ li {
 .created_at {
   float: right;
   margin: 5px;
+}
+
+.info_label {
+  margin: 8px;
 }
 
 /* レスポンシブ：スマホ */
