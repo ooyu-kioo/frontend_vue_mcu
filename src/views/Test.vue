@@ -49,6 +49,9 @@
                 <div>
                   <strong>{{ result.artist_name }}</strong>
                 </div>
+                <div>
+                  <el-tag type="info" effect="plain" size="medium">media</el-tag>
+                </div>
                 <div>{{ result.info_title }}</div>
                 <div class="created_at">{{ result.created_at }}</div>
               </div>
