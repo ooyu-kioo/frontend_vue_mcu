@@ -52,10 +52,7 @@
                 <div></div>
                 <div>{{ result.info_title }}</div>
                 <div class="created_at">
-                  <!-- <el-tag type="info" effect="plain" size="medium">{{ result.info_label }}</el-tag> -->
-                  <strong>
-                    <span class="info_label">{{ result.info_label }}</span>
-                  </strong>
+                  <strong class="info_label">{{ result.info_label }}</strong>
                   <span>{{ result.created_at }}</span>
                 </div>
               </div>
@@ -263,15 +260,6 @@ li {
 }
 .listRelease-leave-active {
   transition: all 1.5s;
-}
-
-.el-submenu {
-  /* width: 100%; */
-}
-
-/* unfilterの色変える？ */
-#unfiltered {
-  background-color: azure;
 }
 </style>
 

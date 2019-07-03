@@ -10,7 +10,7 @@
       active-text-color="#ffd04b"
       router="true"
     >
-      <el-submenu popper-class="el-submenu">
+      <el-submenu popper-class="el-submenu" v-if="!isNews">
         <template slot="title">filter Artist</template>
         <!-- クリックで呼び出すfilter()に引数を渡せる -->
         <el-menu-item @click="unfilterArtist" id="unfiltered">Unfiltered</el-menu-item>
@@ -22,37 +22,74 @@
         <el-menu-item @click="filterArtist('凛として時雨')">凛として時雨</el-menu-item>
         <el-menu-item @click="filterArtist('ヨルシカ')">ヨルシカ</el-menu-item>
       </el-submenu>
+      <el-menu-item @click="showRelease" v-if="isNews">artist Info</el-menu-item>
+      <el-menu-item @click="showRelease">release Info</el-menu-item>
     </el-menu>
 
-    <!-- infomationカード(loadingがfalseで表示) -->
     <!-- api読み込み時のloading -->
     <div class="loading" v-if="isLoading"></div>
-    <div class="container" v-if="!isLoading">
-      <transition-group tag="ul" name="list" class="listArea" appear>
-        <li
-          class="list"
-          v-for="result in results"
-          :key="result.id"
-          @click="transition(result.info_body_link)"
-        >
-          <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
-            <!-- imgソースを動的に組み立て -->
-            <img
-              class="image"
-              :src="require('./../assets/image/artist-image/' + result.artist_name + '.png')"
-              alt="No Image"
-            >
-            <div style="padding: 10px;">
-              <div>
-                <strong>{{ result.artist_name }}</strong>
+    <!-- infomationカード(loadingがfalseで表示) -->
+    <template v-if="!isLoading && isInfomation">
+      <div class="container">
+        <transition-group tag="ul" name="list" class="listArea" appear>
+          <li
+            class="list"
+            v-for="result in results"
+            :key="result.id"
+            @click="transition(result.info_body_link)"
+          >
+            <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
+              <!-- imgソースを動的に組み立て -->
+              <img
+                class="image"
+                :src="require('./../assets/image/artist-image/' + result.artist_name + '.png')"
+                alt="No Image"
+              />
+              <div style="padding: 10px;">
+                <div>
+                  <strong>{{ result.artist_name }}</strong>
+                </div>
+                <div></div>
+                <div>{{ result.info_title }}</div>
+                <div class="created_at">
+                  <strong class="info_label">{{ result.info_label }}</strong>
+                  <span>{{ result.created_at }}</span>
+                </div>
               </div>
-              <div>{{ result.info_title }}</div>
-              <div class="created_at">{{ result.created_at }}</div>
-            </div>
-          </el-card>
-        </li>
-      </transition-group>
-    </div>
+            </el-card>
+          </li>
+        </transition-group>
+      </div>
+    </template>
+
+    <!-- release infoカード() -->
+    <template v-if="!isLoading && isRelease">
+      <div class="container">
+        <transition-group tag="ul" name="list" class="listArea-release">
+          <li
+            class="list"
+            v-for="release in releases"
+            :key="release.id"
+            @click="transition(release.buy_url)"
+          >
+            <el-card class="el-card" :body-style="{padding:'0px'}" shadow="hover">
+              <img
+                class="image"
+                :src="require('./../assets/image/artist-image/' + release.artist_name + '.png')"
+                alt="No Image"
+              />
+              <div>
+                <strong>{{ release.artist_name }}</strong>
+              </div>
+              <div>{{ release.release_title }}</div>
+              <div>{{ release.release_date }}</div>
+            </el-card>
+          </li>
+        </transition-group>
+      </div>
+    </template>
+    <!--  -->
+    <!--  -->
   </div>
 </template>
 
@@ -66,11 +103,17 @@ export default {
   // 表示データの宣言・初期値設定(APIでデータ受け取ってから処理するからnull)
   data() {
     return {
-      // json格納用(allResults=filter用のマスタデータ)
+      // Infomation格納用(allResults=filter用のマスタデータ)
       results: null,
       allResults: null,
-      // loading表示用
-      isLoading: true
+      // releaseInfo格納用
+      releases: null,
+      // 表示切り替え
+      isLoading: true, // loading
+      isInfomation: false, // infomation
+      isRelease: false, // release info
+      // menuBarのボタン表示切り替え
+      isNews: false
     };
   },
   // vueインスタンス生成時に実行する処理を記載(createdと速度差あり)
@@ -87,7 +130,16 @@ export default {
         .then(response => {
           this.results = response.data;
           this.allResults = response.data;
-          this.isLoading = false; // loadingアニメーション表示切り替え
+          this.isLoading = !this.isLoading; // loadingアニメーション表示切り替え
+          this.isInfomation = !this.isInfomation; // infomation表示
+        });
+
+      axios
+        .get(
+          "https://django-vue-mcu.herokuapp.com/api/v1/releaseInfo/?format=json"
+        )
+        .then(response => {
+          this.releases = response.data;
         });
     },
     // 全アーティスト表示
@@ -105,10 +157,12 @@ export default {
       // window.location.href = link; // 同一ページ遷移
       window.open(link, "_blank"); // 別タブ遷移
     },
-    // load表示切り替え
-    // loaded() {
-    //   this.isLoading = false;
-    // },
+    // relase info表示切り替え
+    showRelease() {
+      this.isInfomation = !this.isInfomation;
+      this.isRelease = !this.isRelease;
+      this.isNews = !this.isNews;
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     }
@@ -134,6 +188,15 @@ li {
 
 .listArea {
   /* padding: 0; */
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.listArea-release {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -168,6 +231,10 @@ li {
   margin: 5px;
 }
 
+.info_label {
+  margin: 8px;
+}
+
 /* レスポンシブ：スマホ */
 @media (max-width: 600px) {
   .list {
@@ -186,13 +253,13 @@ li {
   transition: all 1.5s;
 }
 
-.el-submenu {
-  width: 100%;
+/* release => info遷移時 */
+.listRelease-leave {
+  opacity: 0;
+  transform: translateY(-30px);
 }
-
-/* unfilterの色変える？ */
-#unfiltered {
-  background-color: azure;
+.listRelease-leave-active {
+  transition: all 1.5s;
 }
 </style>
 
@@ -203,8 +270,5 @@ li {
 /* サブメニューのアイテム表示域を拡大(artistフィルター) */
 .el-menu--horizontal {
   width: 100%;
-}
-.el-menu--horizontal > el-meu-item {
-  height: 50px;
 }
 </style>
