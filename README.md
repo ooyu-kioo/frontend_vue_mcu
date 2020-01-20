@@ -15,11 +15,12 @@
 ### frontend：Vue.js
 
 - 実行環境：[Netlify](https://www.netlify.com/)
+- [Herokuが落ちないように定期的にurl叩く](https://uptimerobot.com/)
 - API 取得・表示：[MainList.vue](https://github.com/ooyu-kioo/frontend_vue_mcu/blob/master/src/views/MainList.vue)
 - レスポンシブ
 - カードクリックで取得元の公式 HP へ遷移
 
----
+***
 
 ## Project setup
 
